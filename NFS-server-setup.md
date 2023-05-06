@@ -10,11 +10,11 @@ sudo vim /etc/exports
 ```
 
 ```
-nfs/storage/server/public (rw,sync,no_subtree_check)
+/home/tom/nfs/storage/server/public (rw,sync,no_subtree_check)
 OR
-nfs/storage/server/public *(rw,sync,no_subtree_check)
+/home/tom/nfs/storage/server/public  *(rw,sync,no_subtree_check)
 OR
-/nfs/storage/server/public 172.16.56.146(rw,sync,no_subtree_check)
+/home/tom/nfs/storage/server/public 172.16.56.146(rw,sync,no_subtree_check)
 ```
 Allow Firewall
 ```
@@ -29,7 +29,7 @@ showmount -e
 sudo mkdir nfs/storage/client
 sudo chmod 777 nfs/storage/client
 sudo apt install rpcbind nfs-common
-sudo mount Server_IP_ADDRESS:/nfs/storage/server/public nfs/storage/client
+sudo mount Server_IP_ADDRESS:/home/tom/nfs/storage/server/public  nfs/storage/client
 ```
 
 e.g:
