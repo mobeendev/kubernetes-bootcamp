@@ -1,14 +1,16 @@
+
+### Run on MiniKube Machine:
+
+
+```
 sudo apt install rpcbind nfs-common
-
-
+```
 sudo mount Server_IP_ADDRESS:/home/tom/nfs/storage/server/public  path/to/folder/on/minikube
+```
+sudo mount 172.16.56.148:/home/tom/nfs/storage/server/public /mnt```
+```
 
-
-sudo mount 172.16.56.148:/home/tom/nfs/storage/server/public /mnt
-
-
-Run on MiniKube Machine:
-
+```
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -24,12 +26,13 @@ spec:
   nfs:
     server: 172.16.56.148 # ip addres of nfs server
     path: "/home/tom/nfs/storage/server/public" # path to directory
+```
 
+```
 kubectl apply -f mobeen_nfs_pv.yaml
 kubectl get pvc,pv
-
-
-
+```
+```
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -41,16 +44,13 @@ spec:
   resources:
     requests:
       storage: 50Mi
+```
 
-
-
+```
 kubectl apply -f mobeen_nfs_pvc.yaml
 kubectl get pvc,pv
-
-
-
-
-
+```
+```
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -77,33 +77,37 @@ spec:
         volumeMounts:
         - name: nfs-test # name of volume should match claimName volume
           mountPath: /usr/share/nginx/html # mount inside of contianer
+```
 
-
+```
 kubectl apply -f mobeen_nginx_pod.yaml
 kubectl get po
+```
 
-
-
+```
 kubectl expose deploy mobeen-nginx --port 80 --type NodePort
 kubectl get svc
+```
 
+```
 minikube service mobeen-nginx --url
+```
 
+### Run inside  MiniKube NGINX POD:
 
-
-
-
-Run inside  MiniKube NGINX POD:
+```
 kubectl exec -it mobeen_nginx-6cb55d48f7-q2bvd bash
 sudo nano /usr/share/nginx/html/test.html
-
+```
+```
 echo "welcome" > index.html
+```
 
-
-Run on MiniKube Machine:
+### Run on MiniKube Machine:
+```
 minikube ssh
 docker@minikube:/mnt$ echo "welcome" > test.html
-
+```
 
 
 
